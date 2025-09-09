@@ -99,19 +99,20 @@ impl Circle {
 
 pub trait Drawable {
     fn draw(&self, image: &mut Image);
-    fn color();
+    fn color() -> Color;
 }
 
 pub trait Displayable {
-    fn display() {}
+    fn display(&mut self, x: i32, y: i32, color: Color);
 }
 
 impl Drawable for Point {
     fn draw(&self, image: &mut Image) {
-        image.set_pixel(self.x, self.y, Color { r: 255, g: 255, b: 255, a: 255 }).unwrap()
+        image.display(self.x, self.y, Point::color());
     }
 
-    fn color() {
-        
+    fn color() -> Color {
+        let mut rng = rand::thread_rng();
+        Color::rgb( rng.gen_range(0..=255), rng.gen_range(0..=255), rng.gen_range(0..=255))
     }
 }
