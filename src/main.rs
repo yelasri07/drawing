@@ -5,11 +5,11 @@ use gs::{Displayable, Drawable};
 use raster::{Color, Image};
 
 fn main() {
-    let mut image = Image::blank(1000, 1000);
+    let mut image: Image = Image::blank(1000, 1000);
  
     // gs::Line::random(image.width, image.height).draw(&mut image);
 
-    // gs::Point::random(image.width, image.height).draw(&mut image);
+    gs::Point::random(image.width, image.height).draw(&mut image);
 
     // let rectangle = gs::Rectangle::new(&gs::Point::new(150, 300), &gs::Point::new(50, 60));
     // rectangle.draw(&mut image);

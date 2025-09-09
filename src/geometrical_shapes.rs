@@ -1,5 +1,5 @@
 use rand::prelude::*;
-use std::fmt::Pointer;
+use raster::{Color, Image};
 
 // Each shape must be drawn in a different color.
 pub struct Point {
@@ -14,7 +14,7 @@ impl Point {
 
     pub fn random(width: i32, height: i32) -> Point {
         let mut rng = rand::thread_rng();
-        Point { x: rng.gen_range(0..width), y: rng.gen_range(0..heigh) }
+        Point { x: rng.gen_range(0..width), y: rng.gen_range(0..height) }
     }
 }
 
@@ -98,10 +98,20 @@ impl Circle {
 }
 
 pub trait Drawable {
-    fn draw() {}
-    fn color() {}
+    fn draw(&self, image: &mut Image);
+    fn color();
 }
 
 pub trait Displayable {
     fn display() {}
+}
+
+impl Drawable for Point {
+    fn draw(&self, image: &mut Image) {
+        image.set_pixel(self.x, self.y, Color { r: 255, g: 255, b: 255, a: 255 }).unwrap()
+    }
+
+    fn color() {
+        
+    }
 }
