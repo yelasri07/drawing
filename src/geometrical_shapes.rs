@@ -1,8 +1,9 @@
+// src/geometrical_shapes.rs
 use rand::prelude::*;
 use raster::{Color, Image};
 
 // Each shape must be drawn in a different color.
-#[derive(Debug,Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub struct Point {
     x: i32,
     y: i32,
@@ -53,11 +54,11 @@ pub struct Triangle {
 }
 
 impl Triangle {
- pub fn new(a: &Point, b: &Point, c: &Point) -> Triangle {
+    pub fn new(a: &Point, b: &Point, c: &Point) -> Triangle {
         Triangle {
             a: *a,
-            b: *b, 
-            c: *c, 
+            b: *b,
+            c: *c,
         }
     }
 }
@@ -65,16 +66,11 @@ impl Triangle {
 pub struct Rectangle {
     a: Point,
     b: Point,
-
 }
 
 impl Rectangle {
-    pub fn new(a: &Point, b: &Point,) -> Rectangle {
-        return Rectangle {
-            a: *a,
-            b: *b,
-         
-        };
+    pub fn new(a: &Point, b: &Point) -> Rectangle {
+        return Rectangle { a: *a, b: *b };
     }
 }
 
@@ -142,16 +138,15 @@ impl Drawable for Line {
         )
     }
 }
-impl Drawable for Triangle  {
+impl Drawable for Triangle {
     fn draw(&self, image: &mut Image) {
         let color = Line::color();
         draw_line(image, &self.a, &self.b, color.clone());
         draw_line(image, &self.b, &self.c, color.clone());
         draw_line(image, &self.c, &self.a, color.clone());
-
     }
 
-       fn color() -> Color {
+    fn color() -> Color {
         let mut rng = rand::thread_rng();
         Color::rgb(
             rng.gen_range(0..=255),
@@ -160,17 +155,48 @@ impl Drawable for Triangle  {
         )
     }
 }
-impl Drawable for Rectangle  {
+impl Drawable for Rectangle {
     fn draw(&self, image: &mut Image) {
         let color = Line::color();
-        draw_line(image, &self.a, &Point { x: self.b.x, y: self.a.y}, color.clone());
-        draw_line(image, &Point { x: self.b.x, y: self.a.y}, &self.b , color.clone());
-        draw_line(image, &self.b  ,&Point { x: self.a.x, y: self.b.y}, color.clone());
-        draw_line(image, &Point { x: self.a.x, y: self.b.y},&self.a , color.clone());
-
+        draw_line(
+            image,
+            &self.a,
+            &Point {
+                x: self.b.x,
+                y: self.a.y,
+            },
+            color.clone(),
+        );
+        draw_line(
+            image,
+            &Point {
+                x: self.b.x,
+                y: self.a.y,
+            },
+            &self.b,
+            color.clone(),
+        );
+        draw_line(
+            image,
+            &self.b,
+            &Point {
+                x: self.a.x,
+                y: self.b.y,
+            },
+            color.clone(),
+        );
+        draw_line(
+            image,
+            &Point {
+                x: self.a.x,
+                y: self.b.y,
+            },
+            &self.a,
+            color.clone(),
+        );
     }
 
-       fn color() -> Color {
+    fn color() -> Color {
         let mut rng = rand::thread_rng();
         Color::rgb(
             rng.gen_range(0..=255),
@@ -179,6 +205,7 @@ impl Drawable for Rectangle  {
         )
     }
 }
+
 fn draw_line(image: &mut Image, p1: &Point, p2: &Point, color: Color) {
     let dx = p2.x - p1.x;
     let dy = p2.y - p1.y;
@@ -204,5 +231,25 @@ fn draw_line(image: &mut Image, p1: &Point, p2: &Point, color: Color) {
         // Increment the position
         x += x_inc;
         y += y_inc;
+    }
+}
+
+impl Drawable for Circle {
+    fn draw(&self, image: &mut Image) {
+        let color = Circle::color();
+        // draw_line(image, &self.a, &Point { x: self.b.x, y: self.a.y}, color.clone());
+        // draw_line(image, &Point { x: self.b.x, y: self.a.y}, &self.b , color.clone());
+        // draw_line(image, &self.b  ,&Point { x: self.a.x, y: self.b.y}, color.clone());
+        // draw_line(image, &Point { x: self.a.x, y: self.b.y},&self.a , color.clone());
+        image.display(self.center.x, self.center.y , color);
+    }
+
+    fn color() -> Color {
+        let mut rng = rand::thread_rng();
+        Color::rgb(
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+        )
     }
 }
