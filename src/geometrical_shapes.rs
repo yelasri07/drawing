@@ -14,7 +14,10 @@ impl Point {
 
     pub fn random(width: i32, height: i32) -> Point {
         let mut rng = rand::thread_rng();
-        Point { x: rng.gen_range(0..width), y: rng.gen_range(0..height) }
+        Point {
+            x: rng.gen_range(0..width),
+            y: rng.gen_range(0..height),
+        }
     }
 }
 
@@ -113,6 +116,54 @@ impl Drawable for Point {
 
     fn color() -> Color {
         let mut rng = rand::thread_rng();
-        Color::rgb( rng.gen_range(0..=255), rng.gen_range(0..=255), rng.gen_range(0..=255))
+        Color::rgb(
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+        )
+    }
+}
+
+impl Drawable for Line {
+    fn draw(&self, image: &mut Image) {
+        let color = Line::color();
+        draw_line(image, &self.a, &self.b, color);
+    }
+
+    fn color() -> Color {
+        let mut rng = rand::thread_rng();
+        Color::rgb(
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+        )
+    }
+}
+
+fn draw_line(image: &mut Image, p1: &Point, p2: &Point, color: Color) {
+    let dx = p2.x - p1.x;
+    let dy = p2.y - p1.y;
+
+    // Handle the direction of the line, compute step sizes.
+    let steps = if dx.abs() > dy.abs() {
+        dx.abs()
+    } else {
+        dy.abs()
+    };
+
+    let x_inc = dx as f32 / steps as f32;
+    let y_inc = dy as f32 / steps as f32;
+
+    // Start at the initial point
+    let mut x = p1.x as f32;
+    let mut y = p1.y as f32;
+
+    for _ in 0..steps {
+        // Display the pixel at the current position
+        image.display(x.round() as i32, y.round() as i32, color.clone());
+
+        // Increment the position
+        x += x_inc;
+        y += y_inc;
     }
 }
