@@ -2,6 +2,7 @@ use rand::prelude::*;
 use raster::{Color, Image};
 
 // Each shape must be drawn in a different color.
+#[derive(Debug,Clone, Copy)]
 pub struct Point {
     x: i32,
     y: i32,
@@ -52,25 +53,27 @@ pub struct Triangle {
 }
 
 impl Triangle {
-    pub fn new(a: Point, b: Point, c: Point) -> Triangle {
-        return Triangle { a: a, b: b, c: c };
+ pub fn new(a: &Point, b: &Point, c: &Point) -> Triangle {
+        Triangle {
+            a: *a,
+            b: *b, 
+            c: *c, 
+        }
     }
 }
 
 pub struct Rectangle {
     a: Point,
     b: Point,
-    c: Point,
-    d: Point,
+
 }
 
 impl Rectangle {
-    pub fn new(a: Point, b: Point, c: Point, d: Point) -> Rectangle {
+    pub fn new(a: &Point, b: &Point,) -> Rectangle {
         return Rectangle {
-            a: a,
-            b: b,
-            c: c,
-            d: d,
+            a: *a,
+            b: *b,
+         
         };
     }
 }
@@ -139,7 +142,43 @@ impl Drawable for Line {
         )
     }
 }
+impl Drawable for Triangle  {
+    fn draw(&self, image: &mut Image) {
+        let color = Line::color();
+        draw_line(image, &self.a, &self.b, color.clone());
+        draw_line(image, &self.b, &self.c, color.clone());
+        draw_line(image, &self.c, &self.a, color.clone());
 
+    }
+
+       fn color() -> Color {
+        let mut rng = rand::thread_rng();
+        Color::rgb(
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+        )
+    }
+}
+impl Drawable for Rectangle  {
+    fn draw(&self, image: &mut Image) {
+        let color = Line::color();
+        draw_line(image, &self.a, &Point { x: self.b.x, y: self.a.y}, color.clone());
+        draw_line(image, &Point { x: self.b.x, y: self.a.y}, &self.b , color.clone());
+        draw_line(image, &self.b  ,&Point { x: self.a.x, y: self.b.y}, color.clone());
+        draw_line(image, &Point { x: self.a.x, y: self.b.y},&self.a , color.clone());
+
+    }
+
+       fn color() -> Color {
+        let mut rng = rand::thread_rng();
+        Color::rgb(
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+            rng.gen_range(0..=255),
+        )
+    }
+}
 fn draw_line(image: &mut Image, p1: &Point, p2: &Point, color: Color) {
     let dx = p2.x - p1.x;
     let dy = p2.y - p1.y;
