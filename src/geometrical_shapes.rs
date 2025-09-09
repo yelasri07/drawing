@@ -6,78 +6,102 @@ pub struct Point {
     x: i32,
     y: i32,
 }
+
 impl Point {
-    pub fn new (x:i32, y:i32) -> Point {
-        return Point { x: x, y: y }
+    pub fn new(x: i32, y: i32) -> Point {
+        Point { x: x, y: y }
     }
-     pub fn random(){}
+
+    pub fn random(width: i32, height: i32) -> Point {
+        let mut rng = rand::thread_rng();
+        Point { x: rng.gen_range(0..width), y: rng.gen_range(0..heigh) }
+    }
 }
+
 pub struct Line {
     a: Point,
     b: Point,
 }
+
 impl Line {
-    pub fn new (a:Point, b:Point) -> Line {
-        return Line { a: a, b: b } 
+    pub fn new(a: Point, b: Point) -> Line {
+        return Line { a: a, b: b };
     }
-      pub fn random(width:i32, heigh: i32)-> Line{
+    pub fn random(width: i32, heigh: i32) -> Line {
         let mut rng = rand::thread_rng();
-        Line { a: Point { x:rng.gen_range(0..width) , y: rng.gen_range(0..heigh) }, b: Point { x:rng.gen_range(0..width) , y: rng.gen_range(0..heigh) } }
-
-
-
-
+        Line {
+            a: Point {
+                x: rng.gen_range(0..width),
+                y: rng.gen_range(0..heigh),
+            },
+            b: Point {
+                x: rng.gen_range(0..width),
+                y: rng.gen_range(0..heigh),
+            },
+        }
     }
 }
+
 pub struct Triangle {
     a: Point,
     b: Point,
     c: Point,
 }
+
 impl Triangle {
-    pub fn new (a:Point, b:Point , c:Point) -> Triangle {
-        return Triangle { a:a , b: b, c: c }
-        
+    pub fn new(a: Point, b: Point, c: Point) -> Triangle {
+        return Triangle { a: a, b: b, c: c };
     }
-     pub fn random(){}
 }
+
 pub struct Rectangle {
     a: Point,
     b: Point,
     c: Point,
     d: Point,
 }
+
 impl Rectangle {
-    pub fn new (a:Point, b:Point , c:Point , d: Point) -> Rectangle {
-        return Rectangle { a: a, b: b, c: c, d: d }
-        
+    pub fn new(a: Point, b: Point, c: Point, d: Point) -> Rectangle {
+        return Rectangle {
+            a: a,
+            b: b,
+            c: c,
+            d: d,
+        };
     }
-     pub fn random(){}
 }
+
 pub struct Circle {
     center: Point,
     radius: i32,
 }
+
 impl Circle {
-    pub fn new (center:Point, radius:i32 ) -> Circle {
-        return Circle { center: center, radius: radius }
-        
+    pub fn new(center: Point, radius: i32) -> Circle {
+        return Circle {
+            center: center,
+            radius: radius,
+        };
     }
-     pub fn random(width:i32, heigh: i32)-> Circle{
+
+    pub fn random(width: i32, heigh: i32) -> Circle {
         let mut rng = rand::thread_rng();
-
-        Circle { center: Point { x: rng.gen_range(0..width), y: rng.gen_range(0..heigh) }, radius: rng.gen_range(0..(width+heigh)/2)}
-
-
-
+        Circle {
+            center: Point {
+                x: rng.gen_range(0..width),
+                y: rng.gen_range(0..heigh),
+            },
+            radius: rng.gen_range(0..(width + heigh) / 2),
+        }
     }
-    
 }
 
 pub trait Drawable {
     fn draw() {}
     fn color() {}
 }
+
 pub trait Displayable {
     fn display() {}
 }
