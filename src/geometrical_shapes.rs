@@ -1,5 +1,3 @@
-use std::f32::consts::PI;
-
 // src/geometrical_shapes.rs
 use rand::prelude::*;
 use raster::{Color, Image};
