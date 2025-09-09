@@ -1,3 +1,5 @@
+use std::f32::consts::PI;
+
 // src/geometrical_shapes.rs
 use rand::prelude::*;
 use raster::{Color, Image};
@@ -32,6 +34,7 @@ impl Line {
     pub fn new(a: Point, b: Point) -> Line {
         return Line { a: a, b: b };
     }
+
     pub fn random(width: i32, heigh: i32) -> Line {
         let mut rng = rand::thread_rng();
         Line {
@@ -138,6 +141,7 @@ impl Drawable for Line {
         )
     }
 }
+
 impl Drawable for Triangle {
     fn draw(&self, image: &mut Image) {
         let color = Line::color();
@@ -155,6 +159,7 @@ impl Drawable for Triangle {
         )
     }
 }
+
 impl Drawable for Rectangle {
     fn draw(&self, image: &mut Image) {
         let color = Line::color();
@@ -237,11 +242,33 @@ fn draw_line(image: &mut Image, p1: &Point, p2: &Point, color: Color) {
 impl Drawable for Circle {
     fn draw(&self, image: &mut Image) {
         let color = Circle::color();
-        // draw_line(image, &self.a, &Point { x: self.b.x, y: self.a.y}, color.clone());
-        // draw_line(image, &Point { x: self.b.x, y: self.a.y}, &self.b , color.clone());
-        // draw_line(image, &self.b  ,&Point { x: self.a.x, y: self.b.y}, color.clone());
-        // draw_line(image, &Point { x: self.a.x, y: self.b.y},&self.a , color.clone());
-        image.display(self.center.x, self.center.y , color);
+
+        let xc = self.center.x;
+        let yc = self.center.y;
+        let r = self.radius;
+
+        let mut x = 0;
+        let mut y = r;
+        let mut d = 1 - r;
+
+        while x <= y {
+            image.display(xc + x, yc + y, color.clone());
+            image.display(xc - x, yc + y, color.clone());
+            image.display(xc + x, yc - y, color.clone());
+            image.display(xc - x, yc - y, color.clone());
+            image.display(xc + y, yc + x, color.clone());
+            image.display(xc - y, yc + x, color.clone());
+            image.display(xc + y, yc - x, color.clone());
+            image.display(xc - y, yc - x, color.clone());
+
+            x += 1;
+            if d < 0 {
+                d += 2 * x + 1;
+            } else {
+                y -= 1;
+                d += 2 * (x - y) + 1;
+            }
+        }
     }
 
     fn color() -> Color {
