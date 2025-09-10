@@ -2,7 +2,7 @@
 use rand::prelude::*;
 use raster::{Color, Image};
 
-// Each shape must be drawn in a different color.
+// Each shape must be drawn in a different color. it improtant 
 #[derive(Debug, Clone, Copy)]
 pub struct Point {
     x: i32,
