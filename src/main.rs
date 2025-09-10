@@ -1,4 +1,4 @@
- mod geometrical_shapes;
+mod geometrical_shapes;
 use geometrical_shapes as gs;
 
 use gs::{Displayable, Drawable};

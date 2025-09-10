@@ -15,11 +15,9 @@ impl Point {
     }
 
     pub fn random(width: i32, height: i32) -> Point {
-        let mut rng = rand::thread_rng();
-        Point {
-            x: rng.gen_range(0..width),
-            y: rng.gen_range(0..height),
-        }
+        let mut rng = rand::rng();
+        Point::new(rng.random_range(0..width), rng.random_range(0..height))
+      
     }
 }
 
@@ -34,17 +32,9 @@ impl Line {
     }
 
     pub fn random(width: i32, heigh: i32) -> Line {
-        let mut rng = rand::thread_rng();
-        Line {
-            a: Point {
-                x: rng.gen_range(0..width),
-                y: rng.gen_range(0..heigh),
-            },
-            b: Point {
-                x: rng.gen_range(0..width),
-                y: rng.gen_range(0..heigh),
-            },
-        }
+        let mut rng = rand::rng();
+        Line::new(Point { x:  rng.random_range(0..width), y:  rng.random_range(0..heigh) }, Point { x:  rng.random_range(0..width), y:  rng.random_range(0..heigh) })
+     
     }
 }
 
@@ -89,14 +79,12 @@ impl Circle {
     }
 
     pub fn random(width: i32, heigh: i32) -> Circle {
-        let mut rng = rand::thread_rng();
-        Circle {
-            center: Point {
-                x: rng.gen_range(0..width),
-                y: rng.gen_range(0..heigh),
-            },
-            radius: rng.gen_range(0..(width + heigh) / 2),
-        }
+        let mut rng = rand::rng();
+        Circle::new(Point {
+                x: rng.random_range(0..width),
+                y: rng.random_range(0..heigh),
+            }, rng.random_range(0..(width + heigh) / 2))
+
     }
 }
 
@@ -115,11 +103,11 @@ impl Drawable for Point {
     }
 
     fn color() -> Color {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         Color::rgb(
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
         )
     }
 }
@@ -131,11 +119,11 @@ impl Drawable for Line {
     }
 
     fn color() -> Color {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         Color::rgb(
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
         )
     }
 }
@@ -149,11 +137,11 @@ impl Drawable for Triangle {
     }
 
     fn color() -> Color {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         Color::rgb(
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
         )
     }
 }
@@ -200,11 +188,11 @@ impl Drawable for Rectangle {
     }
 
     fn color() -> Color {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         Color::rgb(
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
         )
     }
 }
@@ -270,11 +258,11 @@ impl Drawable for Circle {
     }
 
     fn color() -> Color {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         Color::rgb(
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
-            rng.gen_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
+            rng.random_range(0..=255),
         )
     }
 }
